@@ -1,0 +1,3 @@
+A simple chat client.
+
+This uses Web Sockets to send/receive messages. The back end is implemented in Tornado, and the front end in JavaScript.
