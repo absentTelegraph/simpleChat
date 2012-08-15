@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            var ws = new WebSocket("ws://"+window.location.host+"/websocket");
+            ws.onopen = function() {
+               
+            }
+            ws.onmessage = function (evt) {
+               console.log(evt.data)
+               updateChatHistorty(evt.data)
+            }
+
+            function updateChatHistorty(text) {
+                var s = $("#chatHistoty").val()
+                $("#chatHistoty").val(s + "\n" + text)
+                $("#chatHistoty").scrollTop($("#chatHistoty").get(0).scrollHeight - $("#chatHistoty").height())
+            }
+
+            $(function () {
+                $("#chatForm").submit(function (e) {
+                    e.preventDefault()
+                    ws.send($("#textInput").val())
+                    // updateChatHistorty($("#textInput").val())
+                    $("#textInput").val("")
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <textarea id="chatHistoty" type="textArea" rows="40" cols="50">A simple chat demo</textarea>
+        <form id="chatForm" name="chatForm">
+            <input id="textInput" name="textInput" type="text" />
+            <input id="sendButton" name="sendButton" type="submit" value="send" />
+        </form>
+    </body>
+</html>
